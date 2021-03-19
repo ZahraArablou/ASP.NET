@@ -1,0 +1,154 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@*@model IEnumerable<OnlineAdmission.Models.Application>*@
+@model PagedList.IPagedList<OnlineAdmission.Models.Application>
+    @using OnlineAdmission.Models
+
+@{
+    ViewBag.Title = "IndexAdmin";
+}
+
+@*<h2>IndexAdmin</h2>*@
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<div class="row">
+    <div class="col-md-3">
+        @using (Ajax.BeginForm("IndexAdmin", "Applications", new AjaxOptions()
+        {
+            HttpMethod = "Get",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "grid"
+        }))
+        {
+            <br />
+
+            <form>
+                <div class="mb-3">
+
+                    @*<label for="exampleInputEmail1" class="form-label">Status</label>
+            <input type="text" placeholder="Status" name="searchStatus" class="form-control" value="@ViewBag.CurrentStatus">*@
+
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label"> Name</label>
+                    <input class="form-control" placeholder="student name" name="searchString" type="text" value="@ViewBag.CurrentFilter" />
+                </div>
+                <br />
+                <div class="md-3">
+                  <label for="Status">Status</label>
+                    <select name="searchStatus" id="Status" class=" form-control">
+                        <option value="">----------</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Complete">Complete</option>
+                    </select>
+                </div>
+
+                <br />
+                <br />
+
+                <button type="submit" class="btn btn-primary">search</button>
+                <br /><br />
+            </form>
+
+        }
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.ApplicationId)*@
+            Appliation Id
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.FirstName)*@ @*Student Name*@
+            @Html.ActionLink("FirstName", "IndexAdmin", new { sortOrder = "firstname", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), currentFilter = ViewBag.CurrentFilter })
+            @*@Html.GetArrow((string)ViewBag.sortOrder, "firstname", (string)ViewBag.sortDir)*@
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>*@
+    <th>
+        @*@Html.DisplayNameFor(model => model.Department)*@
+        
+        @Html.ActionLink("Degree", "IndexAdmin", new { sortOrder = "department", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), currentFilter = ViewBag.CurrentFilter })
+
+    </th>
+    <th>
+        @*@Html.DisplayNameFor(model => model.Program)*@
+      
+        @Html.ActionLink("Program", "IndexAdmin", new { sortOrder = "program", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), currentFilter = ViewBag.CurrentFilter })
+    </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>*@
+
+        @*<th>
+                @Html.DisplayNameFor(model => model.TelePhoneNumber)
+            </th>*@
+    <th>
+        @*@Html.DisplayNameFor(model => model.RegistrationDate)*@
+      
+        @Html.ActionLink("Registration Date", "IndexAdmin", new { sortOrder = "registrationdate", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), currentFilter = ViewBag.CurrentFilter })
+    </th>
+    <th>
+        @*@Html.DisplayNameFor(model => model.StatusString)*@
+     
+        @Html.ActionLink("Status", "IndexAdmin", new { sortOrder = "status", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), currentFilter = ViewBag.CurrentFilter })
+    </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Program.Name)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>*@
+
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.TelePhoneNumber)
+                </td>*@
+            <td>
+                @*@Html.DisplayFor(modelItem => item.RegistrationDate)*@
+                @item.RegistrationDate.Value.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusString)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Photo)
+                </td>*@
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.ApplicationId }) |*@
+                @Html.ActionLink("Details", "DetailsAdmin", new { id = item.ApplicationId })
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ApplicationId })*@
+            </td>
+        </tr>
+    }
+
+</table>
+@*<div id="grid">
+    @Html.ActionLink("Student Application", "IndexAdmin", "Applications", new { area = "" }, new { @class = "navbar-brand" })
+
+</div>*@
+@Html.PagedListPager(Model, page => Url.Action("IndexAdmin",
+        new { page, sortOrder = ViewBag.SortOrder, sortDir = ViewBag.SortDir, currentFilter = ViewBag.CurrentFilter }))

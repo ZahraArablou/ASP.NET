@@ -1,0 +1,75 @@
+﻿@model IEnumerable<OnlineAdmission.Models.EnclosedDocument>
+
+@{
+    ViewBag.Title = "EnclosedDocumentsAdmin";
+}
+<br />
+
+<ul id="tabstrip" class="nav nav-tabs" role="tablist">
+    <li><a href="/Applications/DetailsAdmin/@ViewBag.applicationId" role="tab">Personal Information</a></li>
+    <li><a href="/EducationDetails/EducationAdmin/@ViewBag.applicationId" role="tab">Educational Details</a></li>
+    <li class="active"><a href="/EnclosedDocuments/EnclosedDocumentsAdmin/@ViewBag.applicationId" role="tab">Enclosed Documents</a></li>
+</ul>
+
+@*<h4>
+        <a style="padding-right: 10px;" href="/Applications/Details/@ViewBag.applicationId">Personal Information </a><span></span>
+        <a style="padding-right: 10px;" href="/EducationDetails/EducationAdmin/@ViewBag.applicationId">Education Details </a>
+        <a href="/EnclosedDocuments/EnclosedDocumentsAdmin/@ViewBag.applicationId">Enclosed Documents </a>
+    </h4>*@
+<br />
+<br />
+<div class="tab-content">
+    <div class="tab-pane fade" id="_PersonalInfo"></div>
+    <div class="tab-pane fade" id="_EducationDetails"></div>
+    <div class="tab-pane fade in active" id="_EnclosedDocuments">
+       
+        <table class="table">
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Application.FirstName)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.DocumentType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DocumentFile)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Application.FirstName)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocumentType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @if (item.DocumentFile != null)
+                        {
+                            @Html.ActionLink("Download", "DownLoadEnclosedDocuments", "EnclosedDocuments", new { id = item.Id }, new { @target = "_blank" })
+                        }
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>*@
+                </tr>
+            }
+
+        </table>
+        <p>
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.ApplicationId }) |*@
+            @Html.ActionLink("Back to List", "IndexAdmin", "Applications")
+        </p>
+    </div>
+</div>

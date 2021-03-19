@@ -1,0 +1,106 @@
+﻿@model OnlineAdmission.Models.Application
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*<h2>Personal Information</h2>
+    <br />*@
+<br />
+<br />
+<ul id="tabstrip" class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="/Applications/Index" role="tab">Personal Information</a></li>
+    <li><a href="/EducationDetails/Index" role="tab">Educational Details</a></li>
+    <li><a href="/EnclosedDocuments/Index" role="tab">Enclosed Documents</a></li>
+</ul>
+
+<br />
+<br />
+
+@if (ViewBag.flag)
+{
+    <a href="/Applications/FinishApplication" class="btn btn-primary">Submit Application</a>
+    <br />
+}
+@if (!ViewBag.flag)
+{
+    <p style="color:blue"> Application submitted.</p>
+}
+
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Program)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelePhoneNumber)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.RegistrationDate)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @*@foreach (var Model in Model) {*@
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => Model.ApplicationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.User.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.Department.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.Program.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.TelePhoneNumber)
+        </td>
+        @*<td>
+                @Html.DisplayFor(modelItem => Model.RegistrationDate)
+            </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => Model.StatusString)
+        </td>
+        <td>
+            @if (ViewBag.flag)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.ApplicationId })@(" | ")
+                @Html.ActionLink("Details", "Details", new { id = Model.ApplicationId })
+            }
+
+        </td>
+    </tr>
+    @*}*@
+
+</table>

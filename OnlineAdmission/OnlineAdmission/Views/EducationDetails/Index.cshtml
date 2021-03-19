@@ -1,0 +1,88 @@
+﻿@model IEnumerable<OnlineAdmission.Models.EducationDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<br />
+<ul id="tabstrip" class="nav nav-tabs" role="tablist">
+    <li><a href="/Applications/Index" role="tab">Personal Information</a></li>
+    <li class="active"><a href="/EducationDetails/Index" role="tab">Educational Details</a></li>
+    <li ><a href="/EnclosedDocuments/Index" role="tab">Enclosed Documents</a></li>
+</ul>
+
+<br />
+<br />
+
+@if (ViewBag.flag)
+{
+
+    <p>
+        @Html.ActionLink("Add education Details", "Create")
+    </p>
+}
+<br />
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Application.ApplicationId)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Qualification)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoardUniversity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subjects)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Percentage)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Application.ApplicationId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Qualification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardUniversity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subjects)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Percentage)
+            </td>
+            <td>
+                @if (ViewBag.flag)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) @(" | ")
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) @(" | ")
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
